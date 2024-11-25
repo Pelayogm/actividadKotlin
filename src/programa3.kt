@@ -37,6 +37,10 @@ fun comprobarFunciones (funcion:String) {
                     break
                 }
             }
+
+            '}' -> funcionArray.set(i, '{')
+            ']' -> funcionArray.set(i, '[')
+            ')' -> funcionArray.set(i, '(')
         }
     }
 
