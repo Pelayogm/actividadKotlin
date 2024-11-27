@@ -1,33 +1,50 @@
 fun main () {
-    var instrucciones = arrayOf("correr", "saltar", "correr", "saltar", "correr", "saltar", "correr")
-    var pista = ("_|_|_")
+    var instrucciones = arrayOf("saltar", "saltar", "saltar", "saltar", "saltar")
+    var pista = ("||_||")
     correrPistaDeObstaculos(instrucciones, pista)
 }
 
-fun correrPistaDeObstaculos (instrucciones: Array<String>, pista: String) {
-    pista.toCharArray()
+fun correrPistaDeObstaculos (instruccionesUsuario: Array<String>, pista: String) {
+    var instrucciones = instruccionesUsuario.toMutableList()
+    var pistaArray = pista.toMutableList()
     var resultado = mutableListOf<String>()
     var haGanado = true
 
-        for (i in pista.indices) {
-            if (pista[i] == '_' && instrucciones[i] == "correr") {
-                resultado.add("_")
-            } else if (pista[i] == '_' && instrucciones[i] == "saltar") {
-                resultado.add("x")
-                haGanado = false
-            } else {
-                resultado.add("?")
-            }
+    if (pistaArray.size < instrucciones.size) {
+        for (i in pistaArray.size until instrucciones.size) {
+            pistaArray.add(i, '?')
+        }
+    } else {
+        for (i in instrucciones.size until pistaArray.size) {
+            instrucciones.add(i, "?")
+        }
+    }
 
-            if (pista[i] == '|' && instrucciones[i] == "saltar") {
-                resultado.add("|")
-            } else if (pista[i] == '|' && instrucciones[i] == "correr") {
-                resultado.add("/")
-                haGanado = false
-            } else {
-                resultado.add("?")
-            }
+        for (i in pistaArray.indices) {
+            when {
+                pistaArray[i] == '_' && instrucciones[i] == "correr" -> {
+                   resultado.add("_")
+                }
 
+                pistaArray[i] == '_' && instrucciones[i] == "saltar" -> {
+                    resultado.add("x")
+                    haGanado = false
+                }
+
+                pistaArray[i] == '|' && instrucciones[i] == "saltar" -> {
+                    resultado.add("|")
+                }
+
+                pistaArray[i] == '|' && instrucciones[i] == "correr" -> {
+                    resultado.add("/")
+                    haGanado = false
+                }
+
+                else -> {
+                    resultado.add("?")
+                    haGanado = false
+                }
+            }
         }
 
     println("$resultado $haGanado")
